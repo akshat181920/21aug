@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Link-Accessible Page</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a clean look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Background image with a dark overlay for better text readability */
+        .background-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1518621782255-72886f78f85f?q=80&w=2940&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="background-image min-h-screen flex items-center justify-center p-4 text-white">
+
+    <div id="card-container" class="relative p-8 rounded-xl shadow-lg max-w-xl w-full bg-white bg-opacity-10 backdrop-blur-sm flex flex-col items-center">
+        <!-- Navigation Buttons -->
+        <div class="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 z-10">
+            <button id="prev-btn" class="p-2 sm:p-3 bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Previous Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Slide Content -->
+        <div id="slide-content" class="text-center transition-opacity duration-500">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 z-10">
+            <button id="next-btn" class="p-2 sm:p-3 bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Next Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Slide Indicators -->
+        <div id="slide-indicators" class="absolute bottom-4 flex justify-center space-x-2">
+            <!-- Indicators will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+          {
+            title: "Happy Birthday My Love",
+            message: "“Happy Birthday, my darling. If I could, I would wrap all my love in a gift and give it to you… but instead, I’ll spend every day proving it.”"
+          },
+          {
+            title: "baby ka birthday",
+            message: "Every day with you is a gift, and today is the one day we celebrate you. May your year be filled with as much joy as you bring to my life."
+          },
+          {
+            title: "CUTIEE KA BIRTHDAY",
+            message: "To the person who makes my heart skip a beat, my best friend, and my greatest adventure. Wishing you the happiest of birthdays!"
+          },
+          {
+            title: "HAPPY BIRTHDAY MY BETTERHALF",
+            message: "Happy Birthday to the one who stole my heart and still makes it race every single day. I love you endlessly. 💕"
+          },
+          {
+            title: "HAPPY BIRTHDAY MY AKSHITA",
+            message: "Happy Birthday to my favorite person in the whole universe (and probably in other galaxies too)! 🌍💘"
+          },
+          {
+            title: "BABY KA HAI BIRTHDAY BASH",
+            message: "you are my heart’s greatest blessing. Happy Birthday, my love. 💫💖"
+          },
+          {
+            title: "MY LOVE ",
+            message: "You are my today, my tomorrow, and my forever. Happy Birthday, my love. 💫💖"
+          }
+        ];
+
+        let currentSlide = 0;
+        const slideContent = document.getElementById('slide-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideIndicators = document.getElementById('slide-indicators');
+
+        const renderSlide = (index) => {
+            const slide = slides[index];
+            slideContent.innerHTML = `
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-md">
+                    ${slide.title}
+                </h1>
+                <p class="text-base sm:text-lg text-white mb-6 drop-shadow-sm">
+                    ${slide.message}
+                </p>
+                <div class="mt-4 text-sm text-gray-200">
+                    😘😘😘
+                </div>
+            `;
+            updateIndicators();
+        };
+
+        const updateIndicators = () => {
+            slideIndicators.innerHTML = '';
+            slides.forEach((_, index) => {
+                const span = document.createElement('span');
+                span.classList.add('block', 'h-2', 'w-2', 'rounded-full', 'cursor-pointer', 'transition-colors', 'duration-300');
+                if (index === currentSlide) {
+                    span.classList.add('bg-white');
+                } else {
+                    span.classList.add('bg-gray-400', 'bg-opacity-50');
+                }
+                span.addEventListener('click', () => {
+                    currentSlide = index;
+                    renderSlide(currentSlide);
+                });
+                slideIndicators.appendChild(span);
+            });
+        };
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            renderSlide(currentSlide);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            renderSlide(currentSlide);
+        });
+
+        // Initial render
+        renderSlide(currentSlide);
+    </script>
+</body>
+</html>
